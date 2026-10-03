@@ -1,0 +1,91 @@
+# ---------------------------------------------------------------
+# WordPress
+# ---------------------------------------------------------------
+
+# Config with database credentials and secret keys.
+# Commit wp-config-sample.php instead.
+wp-config.php
+wp-config-local.php
+.env
+.env.*
+
+# User uploads and generated files
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+wp-content/cache/
+wp-content/backups/
+wp-content/backup-db/
+wp-content/backups-dup-lite/
+wp-content/updraft/
+wp-content/ai1wm-backups/
+wp-content/wflogs/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/wp-cache-config.php
+wp-content/debug.log
+wp-content/blogs.dir/
+
+# Server-specific rewrite rules at the root (WordPress regenerates these).
+# Anchored with / so plugin .htaccess files (e.g. Akismet's) stay tracked.
+/.htaccess
+/.user.ini
+/php.ini
+
+# Database dumps and archives
+*.sql
+*.sql.gz
+*.sqlite
+*.zip
+*.tar
+*.tar.gz
+*.wpress
+
+# ---------------------------------------------------------------
+# Dependencies and build output
+# ---------------------------------------------------------------
+node_modules/
+# Root Composer folder only: core and plugins ship their own vendor/ folders.
+/vendor/
+.sass-cache/
+*.map
+
+# ---------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+error_log
+php_errorlog
+
+# ---------------------------------------------------------------
+# OS files
+# ---------------------------------------------------------------
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ---------------------------------------------------------------
+# Editors and IDEs
+# ---------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.phpintel/
+
+# ---------------------------------------------------------------
+# Claude Code local settings
+# ---------------------------------------------------------------
+.claude/settings.local.json
