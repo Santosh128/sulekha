@@ -218,14 +218,19 @@
 	// Animate numbers like "250+", "99.5%", "12".
 	function countUp( el ) {
 		var raw = el.getAttribute( 'data-count' ) || '';
-		var match = raw.match( /^([^0-9]*)([0-9]+(?:\.[0-9]+)?)(.*)$/ );
+		var match = raw.match( /^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/ );
 		if ( ! match ) {
 			return;
 		}
 		var prefix = match[ 1 ];
-		var target = parseFloat( match[ 2 ] );
-		var decimals = ( match[ 2 ].split( '.' )[ 1 ] || '' ).length;
+		var number = match[ 2 ].replace( /,/g, '' );
+		var grouped = match[ 2 ].indexOf( ',' ) !== -1;
+		var target = parseFloat( number );
+		var decimals = ( number.split( '.' )[ 1 ] || '' ).length;
 		var suffix = match[ 3 ];
+		var format = function ( n ) {
+			return grouped ? n.toLocaleString( 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals } ) : n.toFixed( decimals );
+		};
 		var start = null;
 		var duration = 1600;
 
@@ -235,7 +240,7 @@
 			}
 			var p = Math.min( ( t - start ) / duration, 1 );
 			var eased = 1 - Math.pow( 1 - p, 3 );
-			el.textContent = prefix + ( target * eased ).toFixed( decimals ) + suffix;
+			el.textContent = prefix + format( target * eased ) + suffix;
 			if ( p < 1 ) {
 				requestAnimationFrame( frame );
 			}

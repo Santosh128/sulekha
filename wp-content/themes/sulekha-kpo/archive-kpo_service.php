@@ -13,7 +13,7 @@ get_template_part(
 	array(
 		'eyebrow' => __( 'What we do', 'sulekha-kpo' ),
 		'title'   => __( 'Our services', 'sulekha-kpo' ),
-		'text'    => __( 'Specialist knowledge teams for research, analytics, finance, legal and healthcare operations.', 'sulekha-kpo' ),
+		'text'    => __( 'Export documentation, document review, trained resources and calling support from our back office in Jamshedpur.', 'sulekha-kpo' ),
 	)
 );
 ?>

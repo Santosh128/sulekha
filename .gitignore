@@ -89,3 +89,12 @@ Desktop.ini
 # Claude Code local settings
 # ---------------------------------------------------------------
 .claude/settings.local.json
+
+# ---------------------------------------------------------------
+# Large media kept out of the repo (e.g. source presentation videos)
+# ---------------------------------------------------------------
+*.mp4
+*.mov
+*.webm
+*.avi
+*.mkv

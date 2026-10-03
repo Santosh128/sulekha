@@ -62,12 +62,24 @@ function sulekha_content_width() {
 add_action( 'after_setup_theme', 'sulekha_content_width', 0 );
 
 /**
+ * Version string for a theme asset, based on its last-modified time, so browsers
+ * and caches fetch the new file whenever it changes.
+ *
+ * @param string $path Path relative to the theme folder.
+ * @return string
+ */
+function sulekha_asset_version( $path ) {
+	$mtime = file_exists( SULEKHA_DIR . '/' . $path ) ? filemtime( SULEKHA_DIR . '/' . $path ) : false;
+	return $mtime ? SULEKHA_VERSION . '.' . $mtime : SULEKHA_VERSION;
+}
+
+/**
  * Enqueue styles and scripts.
  */
 function sulekha_assets() {
 	wp_enqueue_style( 'sulekha-fonts', 'https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&display=swap', array(), null );
-	wp_enqueue_style( 'sulekha-main', SULEKHA_URI . '/assets/css/main.css', array(), SULEKHA_VERSION );
-	wp_enqueue_script( 'sulekha-main', SULEKHA_URI . '/assets/js/main.js', array(), SULEKHA_VERSION, array( 'strategy' => 'defer', 'in_footer' => true ) );
+	wp_enqueue_style( 'sulekha-main', SULEKHA_URI . '/assets/css/main.css', array(), sulekha_asset_version( 'assets/css/main.css' ) );
+	wp_enqueue_script( 'sulekha-main', SULEKHA_URI . '/assets/js/main.js', array(), sulekha_asset_version( 'assets/js/main.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -137,11 +149,12 @@ function sulekha_logo() {
 function sulekha_menu_fallback() {
 	$front = home_url( '/' );
 	$items = array(
-		__( 'Services', 'sulekha-kpo' )   => $front . '#services',
-		__( 'Industries', 'sulekha-kpo' ) => $front . '#industries',
-		__( 'How we work', 'sulekha-kpo' ) => $front . '#process',
-		__( 'About', 'sulekha-kpo' )      => $front . '#about',
-		__( 'Insights', 'sulekha-kpo' )   => $front . '#insights',
+		__( 'About', 'sulekha-kpo' )       => $front . '#about',
+		__( 'Services', 'sulekha-kpo' )    => $front . '#services',
+		__( 'Trade lanes', 'sulekha-kpo' ) => $front . '#trade-lanes',
+		__( 'Our growth', 'sulekha-kpo' )  => $front . '#growth',
+		__( 'Training', 'sulekha-kpo' )    => $front . '#process',
+		__( 'Contact', 'sulekha-kpo' )     => $front . '#contact',
 	);
 	echo '<ul class="menu">';
 	foreach ( $items as $label => $url ) {

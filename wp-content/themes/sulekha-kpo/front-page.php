@@ -143,8 +143,8 @@ endif;
 	<div class="container">
 		<div class="section-head section-head-center reveal">
 			<p class="script-eyebrow"><?php esc_html_e( 'What we offer', 'sulekha-kpo' ); ?></p>
-			<h2><?php echo sulekha_accent( __( 'Knowledge services built around your *outcomes*', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
-			<p><?php esc_html_e( 'From one analyst to a full offshore centre of excellence, we take on high-judgement work that needs domain expertise, not just hands.', 'sulekha-kpo' ); ?></p>
+			<h2><?php echo sulekha_accent( __( 'Export back-office services built around your *shipments*', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p><?php esc_html_e( 'From document preparation to review and trained resources, we handle the export paperwork so your team can focus on trade.', 'sulekha-kpo' ); ?></p>
 		</div>
 		<div class="card-grid">
 			<?php foreach ( $sulekha_services as $sulekha_n => $sulekha_service ) : ?>
@@ -159,7 +159,9 @@ endif;
 						<?php endif; ?>
 					</h3>
 					<p><?php echo esc_html( wp_strip_all_tags( $sulekha_service['text'] ) ); ?></p>
-					<span class="card-link"><?php esc_html_e( 'Learn more', 'sulekha-kpo' ); ?> <?php echo sulekha_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+					<?php if ( $sulekha_service['url'] ) : ?>
+						<span class="card-link"><?php esc_html_e( 'Learn more', 'sulekha-kpo' ); ?> <?php echo sulekha_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>
@@ -179,8 +181,8 @@ endif;
 <section class="approach" id="approach">
 	<div class="approach-panel">
 		<div class="approach-copy reveal">
-			<p class="script-eyebrow script-eyebrow-light"><?php esc_html_e( 'Our approach', 'sulekha-kpo' ); ?></p>
-			<h2><?php echo sulekha_accent( __( 'Built for *quality* at every step', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p class="script-eyebrow script-eyebrow-light"><?php esc_html_e( 'Mission & vision', 'sulekha-kpo' ); ?></p>
+			<h2><?php echo sulekha_accent( __( 'Driven by a clear *purpose*', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
 			<ul class="approach-list">
 				<?php foreach ( sulekha_default_approach() as $sulekha_point ) : ?>
 					<li>
@@ -192,34 +194,105 @@ endif;
 					</li>
 				<?php endforeach; ?>
 			</ul>
-			<a class="btn btn-amber" href="#contact" data-open-quote><?php esc_html_e( 'Start a pilot', 'sulekha-kpo' ); ?> <?php echo sulekha_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+			<a class="btn btn-amber" href="#contact" data-open-quote><?php esc_html_e( 'Work with us', 'sulekha-kpo' ); ?> <?php echo sulekha_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
 		</div>
 	</div>
-	<div class="approach-media" style="background-image:url('<?php echo esc_url( sulekha_mod( 'approach_image' ) ); ?>')" role="img" aria-label="<?php esc_attr_e( 'Team collaborating at a whiteboard', 'sulekha-kpo' ); ?>"></div>
+	<div class="approach-media" style="background-image:url('<?php echo esc_url( sulekha_mod( 'approach_image' ) ); ?>')" role="img" aria-label="<?php esc_attr_e( 'Team planning together at a whiteboard', 'sulekha-kpo' ); ?>"></div>
 </section>
 
-<section class="section" id="industries">
+<?php $sulekha_lanes = sulekha_trade_lanes(); ?>
+<section class="section lanes-section" id="trade-lanes">
 	<div class="container">
 		<div class="section-head section-head-center reveal">
-			<p class="script-eyebrow"><?php esc_html_e( 'Industries we serve', 'sulekha-kpo' ); ?></p>
-			<h2><?php echo sulekha_accent( __( 'Deep expertise in the *sectors* we serve', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p class="script-eyebrow"><?php esc_html_e( 'Trade lanes', 'sulekha-kpo' ); ?></p>
+			<h2><?php echo sulekha_accent( __( 'Documentation for shipments *across continents*', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p><?php esc_html_e( 'We started with Australia-origin shipments in 2017 and kept adding origins. We adapt quickly to change to help businesses grow and compete.', 'sulekha-kpo' ); ?></p>
 		</div>
-		<div class="industry-grid">
-			<?php foreach ( sulekha_default_industries() as $sulekha_industry ) : ?>
-				<div class="industry reveal">
-					<span class="industry-icon"><?php echo sulekha_icon( $sulekha_industry['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-					<span><?php echo esc_html( $sulekha_industry['title'] ); ?></span>
+		<div class="lanes reveal">
+			<div class="lane-panel">
+				<h3><span class="lane-icon"><?php echo sulekha_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span><?php esc_html_e( 'Origins', 'sulekha-kpo' ); ?></h3>
+				<ul class="chip-list">
+					<?php foreach ( $sulekha_lanes['origins'] as $sulekha_place ) : ?>
+						<li><?php echo esc_html( $sulekha_place ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<div class="lane-route" aria-hidden="true">
+				<span class="lane-line"></span>
+				<span class="lane-ship"><?php echo sulekha_icon( 'globe' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+			</div>
+			<div class="lane-panel lane-panel-dark">
+				<h3><span class="lane-icon"><?php echo sulekha_icon( 'target' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span><?php esc_html_e( 'Major destinations', 'sulekha-kpo' ); ?></h3>
+				<ul class="chip-list">
+					<?php foreach ( $sulekha_lanes['destinations'] as $sulekha_place ) : ?>
+						<li><?php echo esc_html( $sulekha_place ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<?php
+$sulekha_shipments = sulekha_shipments();
+$sulekha_axis_max  = 2500;
+$sulekha_ticks     = range( 0, $sulekha_axis_max, 500 );
+?>
+<section class="section section-alt growth" id="growth">
+	<div class="container">
+		<div class="section-head section-head-center reveal">
+			<p class="script-eyebrow"><?php esc_html_e( 'Our growth', 'sulekha-kpo' ); ?></p>
+			<h2><?php echo sulekha_accent( __( 'Steady shipments, *growing* team', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+		</div>
+		<div class="growth-grid">
+			<figure class="chart-card reveal">
+				<figcaption class="chart-head">
+					<h3><?php esc_html_e( 'Shipments handled per year', 'sulekha-kpo' ); ?></h3>
+					<span class="chart-note"><?php esc_html_e( 'Approximate', 'sulekha-kpo' ); ?></span>
+				</figcaption>
+				<div class="chart" style="--max:<?php echo esc_attr( $sulekha_axis_max ); ?>">
+					<div class="chart-grid" aria-hidden="true">
+						<?php foreach ( array_reverse( $sulekha_ticks ) as $sulekha_tick ) : ?>
+							<span><em><?php echo esc_html( number_format_i18n( $sulekha_tick ) ); ?></em></span>
+						<?php endforeach; ?>
+					</div>
+					<div class="chart-bars">
+						<?php foreach ( $sulekha_shipments as $sulekha_year => $sulekha_count ) : ?>
+							<div class="chart-col">
+								<span class="chart-bar" style="--v:<?php echo esc_attr( $sulekha_count ); ?>" tabindex="0" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: year, 2: shipments */ __( '%1$d: about %2$s shipments', 'sulekha-kpo' ), $sulekha_year, number_format_i18n( $sulekha_count ) ) ); ?>">
+									<span class="chart-tip" aria-hidden="true"><strong><?php echo esc_html( $sulekha_year ); ?></strong> &asymp; <?php echo esc_html( number_format_i18n( $sulekha_count ) ); ?></span>
+								</span>
+								<span class="chart-label" aria-hidden="true"><?php echo esc_html( $sulekha_year ); ?></span>
+							</div>
+						<?php endforeach; ?>
+					</div>
 				</div>
-			<?php endforeach; ?>
+			</figure>
+
+			<div class="milestones reveal">
+				<h3><?php esc_html_e( 'Our milestones', 'sulekha-kpo' ); ?></h3>
+				<ol class="timeline">
+					<?php foreach ( sulekha_milestones() as $sulekha_m ) : ?>
+						<li>
+							<span class="timeline-year"><?php echo esc_html( $sulekha_m['year'] ); ?></span>
+							<div>
+								<h4><?php echo esc_html( $sulekha_m['title'] ); ?></h4>
+								<p><?php echo esc_html( $sulekha_m['text'] ); ?></p>
+							</div>
+						</li>
+					<?php endforeach; ?>
+				</ol>
+			</div>
 		</div>
 	</div>
 </section>
 
-<section class="section section-alt process-section" id="process">
+<section class="section process-section" id="process">
 	<div class="container">
 		<div class="section-head section-head-center reveal">
-			<p class="script-eyebrow"><?php esc_html_e( 'How we work', 'sulekha-kpo' ); ?></p>
-			<h2><?php echo sulekha_accent( __( 'A proven path from first call to *steady state*', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p class="script-eyebrow"><?php esc_html_e( 'Resource training', 'sulekha-kpo' ); ?></p>
+			<h2><?php echo sulekha_accent( __( 'How we build a *reliable* team', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p><?php esc_html_e( 'Every team member goes through four stages before they touch a live shipment.', 'sulekha-kpo' ); ?></p>
 		</div>
 		<ol class="process">
 			<?php foreach ( sulekha_default_process() as $sulekha_n => $sulekha_step ) : ?>
@@ -272,9 +345,9 @@ endif;
 	</div>
 </section>
 
-<section class="trust" aria-label="<?php esc_attr_e( 'Security and compliance', 'sulekha-kpo' ); ?>">
+<section class="trust" aria-label="<?php esc_attr_e( 'Why clients rely on us', 'sulekha-kpo' ); ?>">
 	<div class="container trust-inner">
-		<p class="trust-title"><?php echo sulekha_icon( 'shield' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Your data, protected', 'sulekha-kpo' ); ?></p>
+		<p class="trust-title"><?php echo sulekha_icon( 'shield' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Why clients rely on us', 'sulekha-kpo' ); ?></p>
 		<ul class="trust-list">
 			<?php foreach ( sulekha_default_trust() as $sulekha_item ) : ?>
 				<li><?php echo sulekha_icon( $sulekha_item['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php echo esc_html( $sulekha_item['title'] ); ?></li>
