@@ -2,8 +2,9 @@
 /**
  * Careers: resume submission handler.
  *
- * Resumes are emailed as attachments and deleted from the server straight after,
- * so applicants' personal documents are never stored in the public uploads folder.
+ * Each application is saved under Applications in the dashboard (see applications.php)
+ * and emailed with the resume attached. Resumes are kept in a randomly named folder
+ * inside uploads that blocks direct web access.
  *
  * @package Sulekha_KPO
  */
@@ -119,18 +120,40 @@ function sulekha_handle_application() {
 		sulekha_application_redirect( 'filetype' );
 	}
 
-	// Move into a private temp folder under a clean name so the attachment is readable.
-	$dir = trailingslashit( get_temp_dir() ) . 'sulekha-resume-' . wp_generate_password( 16, false );
-	if ( ! wp_mkdir_p( $dir ) ) {
+	// Store the resume in the protected folder under a random, unguessable name.
+	$dir = sulekha_resume_dir();
+	if ( ! $dir ) {
 		sulekha_application_redirect( 'error' );
 	}
 	$slug = sanitize_file_name( sanitize_title( $name ) );
-	$path = $dir . '/resume-' . ( $slug ? $slug : 'applicant' ) . '.' . $check['ext'];
+	$path = $dir . '/resume-' . ( $slug ? $slug : 'applicant' ) . '-' . strtolower( wp_generate_password( 12, false ) ) . '.' . $check['ext'];
 	if ( ! move_uploaded_file( $file['tmp_name'], $path ) ) {
-		@rmdir( $dir ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 		sulekha_application_redirect( 'error' );
 	}
 
+	// Save the application so it can be reviewed under Applications in the dashboard.
+	$post_id = wp_insert_post(
+		array(
+			'post_type'   => 'kpo_application',
+			'post_status' => 'publish',
+			'post_title'  => $name,
+			'meta_input'  => array(
+				'_email'       => $email,
+				'_phone'       => $phone,
+				'_role'        => $role,
+				'_experience'  => $experience,
+				'_message'     => $message,
+				'_resume_file' => basename( $path ),
+				'_status'      => 'new',
+			),
+		),
+		true
+	);
+	if ( is_wp_error( $post_id ) ) {
+		$post_id = 0;
+	}
+
+	// Email notification, with the resume attached.
 	$to = sulekha_mod( 'careers_to' );
 	if ( ! is_email( $to ) ) {
 		$to = is_email( sulekha_mod( 'enquiry_to' ) ) ? sulekha_mod( 'enquiry_to' ) : get_option( 'admin_email' );
@@ -138,28 +161,33 @@ function sulekha_handle_application() {
 
 	/* translators: 1: applicant name, 2: role */
 	$subject = sprintf( __( 'Job application: %1$s (%2$s)', 'sulekha-kpo' ), $name, $role ? $role : __( 'General', 'sulekha-kpo' ) );
-	$body    = implode(
-		"\n",
-		array(
-			__( 'Name', 'sulekha-kpo' ) . ': ' . $name,
-			__( 'Email', 'sulekha-kpo' ) . ': ' . $email,
-			__( 'Phone', 'sulekha-kpo' ) . ': ' . $phone,
-			__( 'Role', 'sulekha-kpo' ) . ': ' . $role,
-			__( 'Experience', 'sulekha-kpo' ) . ': ' . $experience,
-			'',
-			$message,
-			'',
-			__( 'The resume is attached. It has not been stored on the website.', 'sulekha-kpo' ),
-		)
+	$body    = array(
+		__( 'Name', 'sulekha-kpo' ) . ': ' . $name,
+		__( 'Email', 'sulekha-kpo' ) . ': ' . $email,
+		__( 'Phone', 'sulekha-kpo' ) . ': ' . $phone,
+		__( 'Role', 'sulekha-kpo' ) . ': ' . $role,
+		__( 'Experience', 'sulekha-kpo' ) . ': ' . $experience,
+		'',
+		$message,
+		'',
+		__( 'The resume is attached.', 'sulekha-kpo' ),
 	);
+	if ( $post_id ) {
+		$body[] = __( 'View it in WordPress:', 'sulekha-kpo' ) . ' ' . admin_url( 'post.php?post=' . $post_id . '&action=edit' );
+	}
 	$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
 
-	$sent = wp_mail( $to, $subject, $body, $headers, array( $path ) );
+	$sent = wp_mail( $to, $subject, implode( "\n", $body ), $headers, array( $path ) );
 
-	wp_delete_file( $path );
-	@rmdir( $dir ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+	if ( $post_id ) {
+		update_post_meta( $post_id, '_mail_sent', $sent ? 1 : 0 );
+	} else {
+		// Nothing references the file, so don't keep it.
+		wp_delete_file( $path );
+	}
 
-	sulekha_application_redirect( $sent ? 'sent' : 'error' );
+	// Success if the application reached you by either route.
+	sulekha_application_redirect( ( $post_id || $sent ) ? 'sent' : 'error' );
 }
 add_action( 'admin_post_nopriv_sulekha_application', 'sulekha_handle_application' );
 add_action( 'admin_post_sulekha_application', 'sulekha_handle_application' );

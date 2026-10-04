@@ -19,6 +19,7 @@ require SULEKHA_DIR . '/inc/customizer.php';
 require SULEKHA_DIR . '/inc/post-types.php';
 require SULEKHA_DIR . '/inc/enquiry.php';
 require SULEKHA_DIR . '/inc/careers.php';
+require SULEKHA_DIR . '/inc/applications.php';
 
 /**
  * Theme setup.
