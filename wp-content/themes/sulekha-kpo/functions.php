@@ -18,6 +18,7 @@ require SULEKHA_DIR . '/inc/defaults.php';
 require SULEKHA_DIR . '/inc/customizer.php';
 require SULEKHA_DIR . '/inc/post-types.php';
 require SULEKHA_DIR . '/inc/enquiry.php';
+require SULEKHA_DIR . '/inc/careers.php';
 
 /**
  * Theme setup.
@@ -152,8 +153,8 @@ function sulekha_menu_fallback() {
 		__( 'About', 'sulekha-kpo' )       => $front . '#about',
 		__( 'Services', 'sulekha-kpo' )    => $front . '#services',
 		__( 'Trade lanes', 'sulekha-kpo' ) => $front . '#trade-lanes',
-		__( 'Our growth', 'sulekha-kpo' )  => $front . '#growth',
 		__( 'Training', 'sulekha-kpo' )    => $front . '#process',
+		__( 'Careers', 'sulekha-kpo' )     => $front . '#careers',
 		__( 'Contact', 'sulekha-kpo' )     => $front . '#contact',
 	);
 	echo '<ul class="menu">';

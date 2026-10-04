@@ -233,61 +233,7 @@ endif;
 	</div>
 </section>
 
-<?php
-$sulekha_shipments = sulekha_shipments();
-$sulekha_axis_max  = 2500;
-$sulekha_ticks     = range( 0, $sulekha_axis_max, 500 );
-?>
-<section class="section section-alt growth" id="growth">
-	<div class="container">
-		<div class="section-head section-head-center reveal">
-			<p class="script-eyebrow"><?php esc_html_e( 'Our growth', 'sulekha-kpo' ); ?></p>
-			<h2><?php echo sulekha_accent( __( 'Steady shipments, *growing* team', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
-		</div>
-		<div class="growth-grid">
-			<figure class="chart-card reveal">
-				<figcaption class="chart-head">
-					<h3><?php esc_html_e( 'Shipments handled per year', 'sulekha-kpo' ); ?></h3>
-					<span class="chart-note"><?php esc_html_e( 'Approximate', 'sulekha-kpo' ); ?></span>
-				</figcaption>
-				<div class="chart" style="--max:<?php echo esc_attr( $sulekha_axis_max ); ?>">
-					<div class="chart-grid" aria-hidden="true">
-						<?php foreach ( array_reverse( $sulekha_ticks ) as $sulekha_tick ) : ?>
-							<span><em><?php echo esc_html( number_format_i18n( $sulekha_tick ) ); ?></em></span>
-						<?php endforeach; ?>
-					</div>
-					<div class="chart-bars">
-						<?php foreach ( $sulekha_shipments as $sulekha_year => $sulekha_count ) : ?>
-							<div class="chart-col">
-								<span class="chart-bar" style="--v:<?php echo esc_attr( $sulekha_count ); ?>" tabindex="0" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: year, 2: shipments */ __( '%1$d: about %2$s shipments', 'sulekha-kpo' ), $sulekha_year, number_format_i18n( $sulekha_count ) ) ); ?>">
-									<span class="chart-tip" aria-hidden="true"><strong><?php echo esc_html( $sulekha_year ); ?></strong> &asymp; <?php echo esc_html( number_format_i18n( $sulekha_count ) ); ?></span>
-								</span>
-								<span class="chart-label" aria-hidden="true"><?php echo esc_html( $sulekha_year ); ?></span>
-							</div>
-						<?php endforeach; ?>
-					</div>
-				</div>
-			</figure>
-
-			<div class="milestones reveal">
-				<h3><?php esc_html_e( 'Our milestones', 'sulekha-kpo' ); ?></h3>
-				<ol class="timeline">
-					<?php foreach ( sulekha_milestones() as $sulekha_m ) : ?>
-						<li>
-							<span class="timeline-year"><?php echo esc_html( $sulekha_m['year'] ); ?></span>
-							<div>
-								<h4><?php echo esc_html( $sulekha_m['title'] ); ?></h4>
-								<p><?php echo esc_html( $sulekha_m['text'] ); ?></p>
-							</div>
-						</li>
-					<?php endforeach; ?>
-				</ol>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section class="section process-section" id="process">
+<section class="section section-alt process-section" id="process">
 	<div class="container">
 		<div class="section-head section-head-center reveal">
 			<p class="script-eyebrow"><?php esc_html_e( 'Resource training', 'sulekha-kpo' ); ?></p>
@@ -315,32 +261,33 @@ $sulekha_ticks     = range( 0, $sulekha_axis_max, 500 );
 	<?php endforeach; ?>
 </section>
 
-<section class="section testimonials" id="testimonials">
-	<div class="container testimonials-grid">
-		<div class="testimonials-intro reveal">
-			<p class="script-eyebrow"><?php esc_html_e( 'Client stories', 'sulekha-kpo' ); ?></p>
-			<h2><?php echo sulekha_accent( __( 'What our clients are *saying*', 'sulekha-kpo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
-			<p><?php esc_html_e( 'See the difference through our clients’ eyes.', 'sulekha-kpo' ); ?></p>
-			<div class="t-arrows">
-				<button type="button" class="hero-arrow hero-arrow-dark" data-t-prev aria-label="<?php esc_attr_e( 'Previous testimonial', 'sulekha-kpo' ); ?>"><?php echo sulekha_icon( 'chev-left' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
-				<button type="button" class="hero-arrow hero-arrow-dark" data-t-next aria-label="<?php esc_attr_e( 'Next testimonial', 'sulekha-kpo' ); ?>"><?php echo sulekha_icon( 'chev-right' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
-			</div>
+<section class="section careers" id="careers">
+	<div class="container careers-grid">
+		<div class="careers-intro reveal">
+			<p class="script-eyebrow"><?php esc_html_e( 'Careers', 'sulekha-kpo' ); ?></p>
+			<h2><?php echo sulekha_accent( sulekha_mod( 'careers_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h2>
+			<p class="lead-sm"><?php echo esc_html( sulekha_mod( 'careers_text' ) ); ?></p>
+			<ul class="careers-perks">
+				<?php foreach ( sulekha_career_perks() as $sulekha_perk ) : ?>
+					<li>
+						<span class="icon-badge icon-badge-sm"><?php echo sulekha_icon( $sulekha_perk['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+						<div>
+							<h3><?php echo esc_html( $sulekha_perk['title'] ); ?></h3>
+							<p><?php echo esc_html( $sulekha_perk['text'] ); ?></p>
+						</div>
+					</li>
+				<?php endforeach; ?>
+			</ul>
 		</div>
-		<div class="t-track" data-t-track tabindex="0" aria-label="<?php esc_attr_e( 'Testimonials', 'sulekha-kpo' ); ?>">
-			<?php foreach ( sulekha_get_testimonials() as $sulekha_t ) : ?>
-				<figure class="t-card">
-					<span class="t-quote-mark"><?php echo sulekha_icon( 'quote' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-					<blockquote><p><?php echo esc_html( $sulekha_t['quote'] ); ?></p></blockquote>
-					<figcaption>
-						<?php if ( $sulekha_t['image'] ) : ?>
-							<img class="t-avatar" src="<?php echo esc_url( $sulekha_t['image'] ); ?>" alt="" width="56" height="56" loading="lazy">
-						<?php else : ?>
-							<span class="t-avatar"><?php echo esc_html( sulekha_initials( $sulekha_t['name'] ) ); ?></span>
-						<?php endif; ?>
-						<span><strong><?php echo esc_html( $sulekha_t['name'] ); ?></strong><small><?php echo esc_html( $sulekha_t['role'] ); ?></small></span>
-					</figcaption>
-				</figure>
-			<?php endforeach; ?>
+		<div class="careers-form-wrap reveal">
+			<div class="careers-form-head">
+				<span class="careers-form-icon"><?php echo sulekha_icon( 'briefcase' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+				<div>
+					<h3><?php esc_html_e( 'Drop your resume', 'sulekha-kpo' ); ?></h3>
+					<p><?php esc_html_e( 'We’ll be in touch if there’s a role that fits.', 'sulekha-kpo' ); ?></p>
+				</div>
+			</div>
+			<?php get_template_part( 'template-parts/careers-form' ); ?>
 		</div>
 	</div>
 </section>

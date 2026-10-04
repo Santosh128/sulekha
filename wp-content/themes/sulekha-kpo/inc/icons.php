@@ -48,6 +48,8 @@ function sulekha_icon_paths() {
 		'chev-left'   => '<path d="m15 18-6-6 6-6"/>',
 		'chev-right'  => '<path d="m9 18 6-6-6-6"/>',
 		'sparkle'     => '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
+		'upload'      => '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/>',
+		'briefcase'   => '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
 		'menu'        => '<path d="M3 6h18M3 12h18M3 18h18"/>',
 		'close'       => '<path d="M18 6 6 18M6 6l12 12"/>',
 		'linkedin'    => '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',

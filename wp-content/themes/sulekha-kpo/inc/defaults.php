@@ -53,7 +53,7 @@ function sulekha_default_services() {
 		array(
 			'icon'  => 'globe',
 			'title' => __( 'Multi-Origin Coverage', 'sulekha-kpo' ),
-			'text'  => __( 'Australia, Black Sea and Canada origins, shipped to India, China, Pakistan, Bangladesh, Egypt and Algeria.', 'sulekha-kpo' ),
+			'text'  => __( 'Australia, Black Sea and Canada origins, shipped to India, China, Africa, Bangladesh, Egypt and Algeria.', 'sulekha-kpo' ),
 		),
 		array(
 			'icon'  => 'phone',
@@ -78,7 +78,11 @@ function sulekha_trade_lanes() {
 		'destinations' => array(
 			__( 'India', 'sulekha-kpo' ),
 			__( 'China', 'sulekha-kpo' ),
-			__( 'Pakistan', 'sulekha-kpo' ),
+			__( 'Thailand', 'sulekha-kpo' ),
+			__( 'Indonesia', 'sulekha-kpo' ),
+			__( 'Malyasia', 'sulekha-kpo' ),
+			__( 'Vietnam', 'sulekha-kpo' ),
+			__( 'Nepal', 'sulekha-kpo' ),
 			__( 'Bangladesh', 'sulekha-kpo' ),
 			__( 'Egypt', 'sulekha-kpo' ),
 			__( 'Algeria', 'sulekha-kpo' ),
@@ -156,35 +160,6 @@ function sulekha_default_approach() {
 }
 
 /**
- * Shipments handled per year. Values were read from an unlabelled bar chart in the
- * company presentation, so they are approximate.
- *
- * @return array Year => shipments.
- */
-function sulekha_shipments() {
-	return array(
-		2018 => 1450,
-		2019 => 2200,
-		2020 => 1270,
-		2021 => 1950,
-	);
-}
-
-/**
- * Company milestones.
- *
- * @return array
- */
-function sulekha_milestones() {
-	return array(
-		array( 'year' => '2017', 'title' => __( 'Started operation', 'sulekha-kpo' ), 'text' => __( 'Export documentation back office opens for Australia-origin shipments.', 'sulekha-kpo' ) ),
-		array( 'year' => '2019', 'title' => __( 'Team expansion', 'sulekha-kpo' ), 'text' => __( 'The back office grows bigger and recruits more people.', 'sulekha-kpo' ) ),
-		array( 'year' => '2020', 'title' => __( 'Uninterrupted operation', 'sulekha-kpo' ), 'text' => __( 'Work continued without interruption through the lockdowns.', 'sulekha-kpo' ) ),
-		array( 'year' => '2021', 'title' => __( 'BPO calling process', 'sulekha-kpo' ), 'text' => __( 'A calling process is implemented alongside documentation.', 'sulekha-kpo' ) ),
-	);
-}
-
-/**
  * Gallery strip captions (image file => caption).
  *
  * @return array
@@ -216,26 +191,31 @@ function sulekha_default_trust() {
 }
 
 /**
- * Placeholder testimonials, shown until real ones are added under Testimonials.
+ * What new team members get, shown in the careers section.
  *
  * @return array
  */
-function sulekha_default_testimonials() {
+function sulekha_career_perks() {
 	return array(
 		array(
-			'quote' => __( 'Replace this with a quote from a real client. Add testimonials under Testimonials in the dashboard and these placeholders disappear.', 'sulekha-kpo' ),
-			'name'  => __( 'Client name', 'sulekha-kpo' ),
-			'role'  => __( 'Role, Company', 'sulekha-kpo' ),
+			'icon'  => 'layers',
+			'title' => __( 'Structured training', 'sulekha-kpo' ),
+			'text'  => __( 'Learn international trade: Incoterms, documents, methods of payment and supply chain.', 'sulekha-kpo' ),
 		),
 		array(
-			'quote' => __( 'A good testimonial names a specific result: documents always on time, fewer amendments or detention avoided, in the client’s own words.', 'sulekha-kpo' ),
-			'name'  => __( 'Client name', 'sulekha-kpo' ),
-			'role'  => __( 'Role, Company', 'sulekha-kpo' ),
+			'icon'  => 'file',
+			'title' => __( 'Hands-on document skills', 'sulekha-kpo' ),
+			'text'  => __( 'Learn to identify, review and prepare real export documents.', 'sulekha-kpo' ),
 		),
 		array(
-			'quote' => __( 'Two to four sentences works best. Ask the client for permission before publishing their name and company.', 'sulekha-kpo' ),
-			'name'  => __( 'Client name', 'sulekha-kpo' ),
-			'role'  => __( 'Role, Company', 'sulekha-kpo' ),
+			'icon'  => 'check',
+			'title' => __( 'Reviewed at every stage', 'sulekha-kpo' ),
+			'text'  => __( 'Stage-wise reviews after each module, so you’re confident before handling live shipments.', 'sulekha-kpo' ),
+		),
+		array(
+			'icon'  => 'users',
+			'title' => __( 'What we look for', 'sulekha-kpo' ),
+			'text'  => __( 'Sound MS Office skills and the ability to learn quickly. Freshers are welcome.', 'sulekha-kpo' ),
 		),
 	);
 }

@@ -165,34 +165,59 @@
 		play();
 	}
 
-	// Testimonials carousel arrows.
-	var track = document.querySelector( '[data-t-track]' );
-	if ( track ) {
-		var step = function ( dir ) {
-			var card = track.querySelector( '.t-card' );
-			var amount = card ? card.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
-			var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-			if ( dir > 0 && atEnd ) {
-				track.scrollTo( { left: 0 } );
-			} else if ( dir < 0 && track.scrollLeft <= 4 ) {
-				track.scrollTo( { left: track.scrollWidth } );
-			} else {
-				track.scrollBy( { left: dir * amount } );
-			}
+	// Resume drop zone: show the chosen file and check size/type before upload.
+	document.querySelectorAll( '[data-file-drop]' ).forEach( function ( zone ) {
+		var input = zone.querySelector( 'input[type="file"]' );
+		var label = zone.querySelector( '[data-file-label]' );
+		var original = label ? label.innerHTML : '';
+		var max = parseInt( zone.getAttribute( 'data-max' ), 10 ) || 0;
+		var allowed = /\.(pdf|docx?)$/i;
+
+		if ( ! input || ! label ) {
+			return;
+		}
+
+		var formatSize = function ( bytes ) {
+			return bytes >= 1048576 ? ( bytes / 1048576 ).toFixed( 1 ) + ' MB' : Math.max( 1, Math.round( bytes / 1024 ) ) + ' KB';
 		};
-		var tPrev = document.querySelector( '[data-t-prev]' );
-		var tNext = document.querySelector( '[data-t-next]' );
-		if ( tPrev ) {
-			tPrev.addEventListener( 'click', function () {
-				step( -1 );
+
+		var update = function () {
+			var file = input.files && input.files[ 0 ];
+			var problem = '';
+			zone.classList.remove( 'has-file', 'has-error' );
+
+			if ( ! file ) {
+				label.innerHTML = original;
+				input.setCustomValidity( '' );
+				return;
+			}
+			if ( ! allowed.test( file.name ) ) {
+				problem = 'Please choose a PDF, DOC or DOCX file.';
+			} else if ( max && file.size > max ) {
+				problem = 'This file is too large (max ' + formatSize( max ) + ').';
+			}
+
+			input.setCustomValidity( problem );
+			zone.classList.add( problem ? 'has-error' : 'has-file' );
+			label.textContent = '';
+			var name = document.createElement( 'strong' );
+			name.textContent = file.name;
+			label.appendChild( name );
+			label.appendChild( document.createTextNode( ' ' + ( problem || '(' + formatSize( file.size ) + ')' ) ) );
+		};
+
+		input.addEventListener( 'change', update );
+		[ 'dragenter', 'dragover' ].forEach( function ( type ) {
+			zone.addEventListener( type, function () {
+				zone.classList.add( 'is-dragover' );
 			} );
-		}
-		if ( tNext ) {
-			tNext.addEventListener( 'click', function () {
-				step( 1 );
+		} );
+		[ 'dragleave', 'drop' ].forEach( function ( type ) {
+			zone.addEventListener( type, function () {
+				zone.classList.remove( 'is-dragover' );
 			} );
-		}
-	}
+		} );
+	} );
 
 	// Quote dialog.
 	var dialog = document.getElementById( 'quote-dialog' );

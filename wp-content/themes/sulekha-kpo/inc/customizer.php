@@ -66,6 +66,11 @@ function sulekha_settings() {
 		'whatsapp'         => array( 'section' => 'sulekha_contact', 'label' => __( 'WhatsApp number with country code, digits only (shows floating button)', 'sulekha-kpo' ), 'default' => '' ),
 		'enquiry_to'       => array( 'section' => 'sulekha_contact', 'label' => __( 'Send enquiries to (defaults to admin email)', 'sulekha-kpo' ), 'default' => '', 'type' => 'email' ),
 
+		// Careers.
+		'careers_title'    => array( 'section' => 'sulekha_careers', 'label' => __( 'Heading (wrap a word in *asterisks* to highlight)', 'sulekha-kpo' ), 'default' => __( 'Build your career in *export documentation*', 'sulekha-kpo' ) ),
+		'careers_text'     => array( 'section' => 'sulekha_careers', 'label' => __( 'Text', 'sulekha-kpo' ), 'default' => __( 'We are always looking for quick learners to join our back office in Jamshedpur. We train you in international trade and review your progress at every stage, so you can grow with a team that has been expanding since 2017.', 'sulekha-kpo' ), 'type' => 'textarea' ),
+		'careers_to'       => array( 'section' => 'sulekha_careers', 'label' => __( 'Send resumes to (defaults to the enquiry email, then the admin email)', 'sulekha-kpo' ), 'default' => '', 'type' => 'email' ),
+
 		// Social / footer.
 		'social_linkedin'  => array( 'section' => 'sulekha_footer', 'label' => __( 'LinkedIn URL', 'sulekha-kpo' ), 'default' => '', 'type' => 'url' ),
 		'social_twitter'   => array( 'section' => 'sulekha_footer', 'label' => __( 'X / Twitter URL', 'sulekha-kpo' ), 'default' => '', 'type' => 'url' ),
@@ -115,6 +120,7 @@ function sulekha_customize_register( $wp_customize ) {
 		'sulekha_stats'   => __( 'Key numbers', 'sulekha-kpo' ),
 		'sulekha_about'   => __( 'About', 'sulekha-kpo' ),
 		'sulekha_contact' => __( 'Contact & enquiries', 'sulekha-kpo' ),
+		'sulekha_careers' => __( 'Careers', 'sulekha-kpo' ),
 		'sulekha_footer'  => __( 'Footer & social', 'sulekha-kpo' ),
 	);
 	foreach ( $sections as $id => $title ) {

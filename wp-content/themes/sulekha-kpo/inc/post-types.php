@@ -31,88 +31,6 @@ function sulekha_register_post_types() {
 			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
 		)
 	);
-
-	register_post_type(
-		'kpo_testimonial',
-		array(
-			'labels'              => array(
-				'name'          => __( 'Testimonials', 'sulekha-kpo' ),
-				'singular_name' => __( 'Testimonial', 'sulekha-kpo' ),
-				'add_new_item'  => __( 'Add New Testimonial', 'sulekha-kpo' ),
-				'edit_item'     => __( 'Edit Testimonial', 'sulekha-kpo' ),
-			),
-			'description'         => __( 'Title = client name, Excerpt = role and company, Content = the quote.', 'sulekha-kpo' ),
-			'public'              => false,
-			'show_ui'             => true,
-			'exclude_from_search' => true,
-			'menu_icon'           => 'dashicons-format-quote',
-			'show_in_rest'        => true,
-			'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-		)
-	);
-}
-
-/**
- * Hint on the testimonial edit screen.
- *
- * @param string  $text Placeholder.
- * @param WP_Post $post Post.
- * @return string
- */
-function sulekha_testimonial_title_placeholder( $text, $post ) {
-	return 'kpo_testimonial' === $post->post_type ? __( 'Client name', 'sulekha-kpo' ) : $text;
-}
-add_filter( 'enter_title_here', 'sulekha_testimonial_title_placeholder', 10, 2 );
-
-/**
- * Testimonials: real posts if any, otherwise placeholders.
- *
- * @return array Each item: quote, name, role, image.
- */
-function sulekha_get_testimonials() {
-	$posts = get_posts(
-		array(
-			'post_type'      => 'kpo_testimonial',
-			'posts_per_page' => 8,
-			'orderby'        => array( 'menu_order' => 'ASC', 'date' => 'DESC' ),
-		)
-	);
-
-	if ( ! $posts ) {
-		return array_map(
-			function ( $t ) {
-				$t['image'] = '';
-				return $t;
-			},
-			sulekha_default_testimonials()
-		);
-	}
-
-	$items = array();
-	foreach ( $posts as $p ) {
-		$items[] = array(
-			'quote' => wp_strip_all_tags( $p->post_content ),
-			'name'  => get_the_title( $p ),
-			'role'  => $p->post_excerpt,
-			'image' => get_the_post_thumbnail_url( $p, 'thumbnail' ),
-		);
-	}
-	return $items;
-}
-
-/**
- * Initials for avatar placeholders.
- *
- * @param string $name Name.
- * @return string
- */
-function sulekha_initials( $name ) {
-	$parts    = preg_split( '/\s+/', trim( $name ) );
-	$initials = '';
-	foreach ( array_slice( $parts, 0, 2 ) as $part ) {
-		$initials .= function_exists( 'mb_substr' ) ? mb_substr( $part, 0, 1 ) : substr( $part, 0, 1 );
-	}
-	return strtoupper( $initials );
 }
 add_action( 'init', 'sulekha_register_post_types' );
 
@@ -141,7 +59,7 @@ add_action( 'add_meta_boxes', 'sulekha_service_meta_box' );
 function sulekha_service_icon_box( $post ) {
 	wp_nonce_field( 'sulekha_service_icon', 'sulekha_service_icon_nonce' );
 	$current = get_post_meta( $post->ID, '_sulekha_icon', true );
-	$skip    = array( 'arrow-right', 'arrow-left', 'arrow-up', 'chev-left', 'chev-right', 'menu', 'close', 'linkedin', 'twitter', 'facebook', 'whatsapp', 'quote', 'sparkle' );
+	$skip    = array( 'arrow-right', 'arrow-left', 'arrow-up', 'chev-left', 'chev-right', 'menu', 'close', 'linkedin', 'twitter', 'facebook', 'whatsapp', 'quote', 'sparkle', 'upload' );
 	echo '<select name="sulekha_icon" style="width:100%">';
 	foreach ( array_keys( sulekha_icon_paths() ) as $name ) {
 		if ( in_array( $name, $skip, true ) ) {
