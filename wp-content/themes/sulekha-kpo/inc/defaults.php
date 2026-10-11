@@ -74,6 +74,9 @@ function sulekha_trade_lanes() {
 			__( 'Australia', 'sulekha-kpo' ),
 			__( 'Black Sea', 'sulekha-kpo' ),
 			__( 'Canada', 'sulekha-kpo' ),
+			__( 'Tanzania', 'sulekha-kpo' ),
+			__( ' Mozambique', 'sulekha-kpo' ),
+			__( ' USA', 'sulekha-kpo' ),
 		),
 		'destinations' => array(
 			__( 'India', 'sulekha-kpo' ),
@@ -86,6 +89,8 @@ function sulekha_trade_lanes() {
 			__( 'Bangladesh', 'sulekha-kpo' ),
 			__( 'Egypt', 'sulekha-kpo' ),
 			__( 'Algeria', 'sulekha-kpo' ),
+			__( 'UAE', 'sulekha-kpo' ),
+			__( 'Sri Lanka', 'sulekha-kpo' )
 		),
 	);
 }
